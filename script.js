@@ -12,8 +12,8 @@ var jsCopter = {
     // object : default options, can be overwritten by init call
     options : {
         canvas : {
-            width : 500,
-            height : 300,
+            width : 300,
+            height : 200,
             refreshRate : 20
         },
         copter : {
@@ -21,7 +21,7 @@ var jsCopter = {
             height : 15,
             topSpeed : 5,                   // max speed
             acceleration : 0.15,            // how much to increase the speed by each time the game refreshes and the button is held down
-            img : null                      // optional copter image path, relative to the html page
+            img : null //'ship.svg'                // optional copter image path, relative to the html page
         },
         physics : {
             terminalVelocity : 4,           // max speed
@@ -43,8 +43,8 @@ var jsCopter = {
             height : 50
         },
         colours : {
-            bg : "#000000",
-            fill : "#ff9900",
+            bg : "#333",
+            fill : "#C7017F",
             light : "#ffffff"
         }
     },
@@ -318,15 +318,6 @@ var jsCopter = {
         this.scores.elements.current = this.createScore('current');
         this.scores.elements.top = this.createScore('top');
 
-        // retrieve the current top score from cookie, if cookie script is present
-        if (!!cookie && !!cookie.get) {
-            var topScore = cookie.get('topScore');
-        }
-
-        // condition : if a current top score exists, set it
-        if (topScore) {
-            this.scores.top = this.scores.elements.top.innerHTML = topScore;
-        }
     },
 
 
@@ -361,13 +352,12 @@ var jsCopter = {
     /**
      * Initialise the mouse listener, to detect when the mouse button is being pressed
      */
-    initMouseListener: function(){
+    initMouseListener: function() {
 
         // save 'this' state
         var that = this;
 
-        // detect mouse press
-        document.onmousedown = function(event) {
+        var dwn = function(event) {
 
             // condition : if mouse press is over the canvas element
             if (event.target.id == that.canvas.id) {
@@ -381,11 +371,13 @@ var jsCopter = {
                 }
             }
         }
+        // detect mouse/tap press
+        document.addEventListener('mousedown', dwn);
+        document.addEventListener('touchstart', dwn);
 
-        // detect mouse release
-        document.onmouseup = function(event) {
-            that.mouseDown = false;
-        }
+        // detect mouse/tap release
+        document.addEventListener('mouseup', function(event) {that.mouseDown = false});
+        document.addEventListener('touchend', function(event) {that.mouseDown = false});
     },
 
 
@@ -689,11 +681,8 @@ var jsCopter = {
 
             // set the top score
             this.scores.elements.top.innerHTML = this.scores.current;
+            this.scores.top = this.scores.current;
 
-            // set cookie containing the top score
-            if (cookie && cookie.set) {
-                cookie.set('topScore', this.scores.current, 1000, '/');
-            }
         }
 
         // condition : create death text ?
