@@ -369,6 +369,7 @@ var jsCopter = {
                 if (that.gameRunning === false) {
                     that.startGame();
                 }
+                event.stopPropagation();
             }
         }
         // detect mouse/tap press
