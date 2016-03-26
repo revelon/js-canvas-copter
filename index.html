@@ -1,14 +1,35 @@
+<!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>JS Canvas Copter</title>
     </head>
     <body>
 
+<span id="fileSize">
+    200 kB
+    
+    
+</span>
+
         <div id="jscopter-container"></div>
+        <progress id="gameProg" max="100" value="0" style="width: 300px"></progress>
+        <p>Score: <strong id="score">0</strong> - &nbsp; TopScore: <strong id="topscore">0</strong> - &nbsp; Limit: <strong id="gameLimit">0</strong></p>
+        <h4 id="failure" style="display:none">Smůla, zkus to znovu!</h6>
+        <h4 id="victory" style="display:none">Výborně, můžeš stahovat! Klidně ale můžeš hrát znovu ;-)</h6>
+
+<div class="grid12" id="fileDownload">
+            <span class="commonBigButton jsOpenDownload" style="display:block; background:gold">Stáhnout</span>
+</div>
 
         <script src="script.js"></script>
         <script>
-            jsCopter.init("jscopter", "jscopter-container", {});
+            var x = (document.getElementById('fileSize').innerHTML).trim().split(' ');
+            var limit = 100;
+            if (x[0] < 10) limit = x[0] * 100;
+            else if (x[0] < 100) limit = x[0] * 10;
+            else limit = x[0];
+            jsCopter.init("jscopter", "jscopter-container", "fileDownload", limit);
         </script>
 
     </body>

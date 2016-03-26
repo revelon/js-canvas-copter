@@ -102,28 +102,47 @@ var jsCopter = {
     // object : to contain the death text. when you die.
     deathText : null,
 
+    // object : to contain the victory text. when you win.
+    winText : null,
+
+    // element holding download 
+    downButton: null,
+
+    // passed limit in kB, MB, or GB
+    goalLimit: 0,
+
+    // visual progress bar element
+    progress: 0,
 
     /**
      * start the JS Copter process
      *
      * @param canvasId string the id of the canvas element that will be created
-      * @param parentId string the id of the html element to attach the canvas to
+     * @param parentId string the id of the html element to attach the canvas to
      * @param options object a set of optional options, to set defaults
      *
      * @return void
      */
-    init: function(canvasId, parentId, options){
+    init: function(canvasId, parentId, downButton, goalLimit){
 
         // search for parent element - if not found, stop now
         this.container = document.getElementById(parentId);
         if (!this.container) return false;
 
-        // set the options
-        for (var optionType in options) {
-            for (var subOption in options[optionType]) {
-                this.options[optionType][subOption] = options[optionType][subOption];
-            }
-        };
+        // hide and then later show download button for people
+        this.downButton = document.getElementById(downButton);
+        this.downButton.style.display = 'none';
+
+        this.deathText = document.getElementById('failure');
+        this.winText = document.getElementById('victory');
+
+        this.progress = document.getElementById('gameProg');
+        this.progress.max = goalLimit;
+
+        document.getElementById('gameLimit').firstChild.data = goalLimit;
+
+        // set desired goal to win limit
+        this.goalLimit = goalLimit;
 
         // Create a canvas element
         this.canvas = this.createCanvas(canvasId);
@@ -218,9 +237,9 @@ var jsCopter = {
         this.gameData.walls.current.length = 0;
 
         // reset death text
-        if (!!this.deathText) {
-            this.deathText.style.display = "none";
-        }
+        this.deathText.style.display = "none";
+
+        this.progress.value = 0;
 
         // create initial floor and ceiling
         this.createInitialWalls();
@@ -315,39 +334,10 @@ var jsCopter = {
     initScoring: function() {
 
         // create score html elements and add them to the page
-        this.scores.elements.current = this.createScore('current');
-        this.scores.elements.top = this.createScore('top');
+        this.scores.elements.current = document.getElementById('score');
+        this.scores.elements.top = document.getElementById('topscore');
 
     },
-
-
-    /**
-     * create score html elements
-     *
-     */
-    createScore: function(scoreType) {
-
-        // create score element
-        var scoreContainer = document.createElement("p");
-        scoreContainer.id = scoreType+"scorecontainer";
-        var scoreContainerText = document.createTextNode(this.ucFirst(scoreType) + " score: ");
-        scoreContainer.appendChild(scoreContainerText);
-
-        // create score container, ready to return
-        var score = document.createElement("strong");
-        score.id = scoreType+"score";
-
-        // set the current score to 0
-        var scoreText = document.createTextNode("0");
-        score.appendChild(scoreText);
-        scoreContainer.appendChild(score);
-
-        // add the scores to the page
-        this.container.appendChild(scoreContainer);
-
-        return score;
-    },
-
 
     /**
      * Initialise the mouse listener, to detect when the mouse button is being pressed
@@ -409,8 +399,12 @@ var jsCopter = {
         // check for impact
         var impact = this.checkForImpact();
 
-        // condition : check for an impact
-        if (impact === false) {
+        // consider limit as fullfiled
+        if (this.scores.current >= this.goalLimit) {
+            this.endGame(true);
+
+        // set desired goal to win limit
+        } else if (impact === false) {
 
             // update graphics
             this.createBG();
@@ -418,12 +412,13 @@ var jsCopter = {
             this.createWalls();
             this.createObstacles();
 
-            // update score
+            // update score and progress
             this.updateScore();
+            this.progress.value = this.scores.current;
 
         // condition : an impact has occurred, end the game
         } else {
-            this.endGame();
+            this.endGame(false);
         }
     },
 
@@ -668,7 +663,7 @@ var jsCopter = {
         this.scores.halfStep = (this.scores.halfStep == 0) ? 1 : 0;
         if (this.scores.halfStep == 1) {
             this.scores.current++;
-            this.scores.elements.current.innerHTML = this.scores.current;
+            this.scores.elements.current.firstChild.data = this.scores.current;
         }
     },
 
@@ -676,7 +671,7 @@ var jsCopter = {
     /*
      * Function to call when the game has come to an end
      */
-    endGame: function() {
+    endGame: function(win) {
 
         // condition : if the current score is higher than the top score, set it
         if (this.scores.current > this.scores.top) {
@@ -687,15 +682,15 @@ var jsCopter = {
 
         }
 
-        // condition : create death text ?
-        if (!this.deathText) {
-            this.deathText = document.createElement("p");
-            this.deathText.id = "deathtext";
-            var deathTextText = document.createTextNode("CRASH!");
-            this.deathText.appendChild(deathTextText);
-            this.container.appendChild(this.deathText);
+        if (win) {
+
+            this.winText.style.display = "block";
+            this.downButton.style.display = 'block';
+
         } else {
+
             this.deathText.style.display = "block";
+
         }
 
         // stop the interval
