@@ -74,6 +74,7 @@ var jsCopter = {
     scores : {
         current : 0,
         top : 0,
+        fails: 0,
         elements : {
             current : null,
             top : null
@@ -131,7 +132,7 @@ var jsCopter = {
 
         // hide and then later show download button for people
         this.downButton = document.getElementById(downButton);
-        this.downButton.style.display = 'none';
+        this.downButton.classList.toggle("hidden");
 
         this.deathText = document.getElementById('failure');
         this.winText = document.getElementById('victory');
@@ -387,6 +388,7 @@ var jsCopter = {
 
         // set interval to start the game
         this.canvasInterval = setInterval('jsCopter.draw()', this.options.canvas.refreshRate);
+        //window.requestAnimationFrame(this.draw);
     },
 
 
@@ -400,11 +402,13 @@ var jsCopter = {
         var impact = this.checkForImpact();
 
         // consider limit as fullfiled
-        if (this.scores.current >= this.goalLimit) {
-            this.endGame(true);
+        if (this.scores.current == this.goalLimit) {
+            this.winText.style.display = "block";
+            this.downButton.classList.toggle("hidden");
+        }
 
         // set desired goal to win limit
-        } else if (impact === false) {
+        if (impact === false) {
 
             // update graphics
             this.createBG();
@@ -415,6 +419,7 @@ var jsCopter = {
             // update score and progress
             this.updateScore();
             this.progress.value = this.scores.current;
+            //window.requestAnimationFrame(this.draw);
 
         // condition : an impact has occurred, end the game
         } else {
@@ -671,7 +676,7 @@ var jsCopter = {
     /*
      * Function to call when the game has come to an end
      */
-    endGame: function(win) {
+    endGame: function() {
 
         // condition : if the current score is higher than the top score, set it
         if (this.scores.current > this.scores.top) {
@@ -681,16 +686,17 @@ var jsCopter = {
             this.scores.top = this.scores.current;
 
         }
+        this.scores.fails++;
 
-        if (win) {
+        // make it easier for clumsy people
+        if (this.scores.fails == 3) {
 
-            this.winText.style.display = "block";
-            this.downButton.style.display = 'block';
+            document.getElementById('toohard').style.display = "block";
+            this.downButton.classList.toggle("hidden");
 
         } else {
 
             this.deathText.style.display = "block";
-
         }
 
         // stop the interval
