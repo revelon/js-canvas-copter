@@ -21,14 +21,23 @@
             height:1px;
             overflow:hidden;
         }
+        h4 {
+            color: #333;
+            font: bold 14px sans-serif;
+        }
+        #game-container p {
+            color: #000;
+            font: 12px sans-serif;
+        }
         </style>
-        <div id="game-container"></div>
-        <progress id="gameProg" max="100" value="0" style="width: 300px"></progress>
+        <div id="game-container">
         <p>Score: <strong id="score">0</strong> - &nbsp; TopScore: <strong id="topscore">0</strong> - &nbsp; Limit: <strong id="gameLimit">0</strong></p>
-        <h4 id="failure" style="display:none">Smůla, zkus to znovu!</h6>
-        <h4 id="victory" style="display:none">Výborně, můžeš stahovat! Ale klidně hraj dále ;-)</h6>
-        <h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i bez výhry ;-)</h6>
-
+        <progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br>
+        </div>
+        <h4 id="failure" style="display:none">Bum! Zkus to znovu! / Crash! Try again!</h4>
+        <h4 id="victory" style="display:none">Výborně, můžeš stahovat! / Great, you can download!</h4>
+        <h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i bez výhry.<br>Too hard?Well, you can download even without win.</h4>
+        
 <div class="grid12" id="fileDownload">
             <span class="commonBigButton jsOpenDownload" style="display:block; background:gold">Stáhnout</span>
 </div>
@@ -38,8 +47,8 @@
             var x = (document.getElementById('fileSize').innerHTML).trim().split(' ');
             var limit = 100;
             if (x[0] < 5) limit = x[0] * 100;
-            else if (x[0] < 10) limit = Math.ceil(x[0]/2) * 10;
-            else limit = 444;
+            else if (x[0] < 10) limit = Math.ceil(x[0]/2) * 100;
+            else limit = 250;
             jsCopter.init("jscopter", "game-container", "fileDownload", limit);
         </script>
 
