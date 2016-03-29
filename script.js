@@ -14,7 +14,7 @@ var jsCopter = {
         canvas : {
             width : 300,
             height : 200,
-            refreshRate : 20
+            refreshRate : 25
         },
         copter : {
             width : 30,
@@ -385,6 +385,7 @@ var jsCopter = {
 
         // set running variable
         this.gameRunning = true;
+        document.getElementById('intro').style.display = "none";
 
         // set interval to start the game
         this.canvasInterval = setInterval('jsCopter.draw()', this.options.canvas.refreshRate);
