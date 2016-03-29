@@ -115,6 +115,9 @@ var jsCopter = {
     // visual progress bar element
     progress: 0,
 
+    // flag indicating that download link shoudl already be visible
+    wonAlready: false,
+
     /**
      * start the JS Copter process
      *
@@ -406,9 +409,10 @@ var jsCopter = {
         var impact = this.checkForImpact();
 
         // consider limit as fullfiled
-        if (this.scores.current == this.goalLimit) {
+        if (!this.wonAlready && this.scores.current == this.goalLimit) {
             this.winText.style.display = "block";
             this.downButton.classList.toggle("hidden");
+            this.wonAlready = true;
         }
 
         // set desired goal to win limit
@@ -693,10 +697,11 @@ var jsCopter = {
         this.scores.fails++;
 
         // make it easier for clumsy people
-        if (this.scores.fails == 3) {
+        if (!this.wonAlready && this.scores.fails == 3) {
 
             document.getElementById('toohard').style.display = "block";
             this.downButton.classList.toggle("hidden");
+            this.wonAlready = true;
 
         } else {
 
@@ -708,16 +713,6 @@ var jsCopter = {
 
         // set running variable
         this.gameRunning = false;
-    },
-
-
-    /**
-     * function to Capitalise the First text Character of A string
-     * @param {string} title the url of the new link
-     * @returns {string} the new Text String
-     */
-    ucFirst: function(textString) {
-        //return textString.substr(0,1).toUpperCase() + textString.substr(1,textString.length);
-        return textString;
     }
+
 }
