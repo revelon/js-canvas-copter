@@ -237,8 +237,11 @@ var jsCopter = {
         // remove all walls
         this.gameData.walls.current.length = 0;
 
-        // reset death text
+        // reset death and other text
         this.deathText.style.display = "none";
+        this.winText.style.display = "none";
+        document.getElementById('toohard').style.display = "none";
+        document.getElementById('intro').style.display = "none";
 
         this.progress.value = 0;
 
@@ -419,7 +422,6 @@ var jsCopter = {
 
             // update score and progress
             this.updateScore();
-            this.progress.value = this.scores.current;
             //window.requestAnimationFrame(this.draw);
 
         // condition : an impact has occurred, end the game
@@ -670,6 +672,7 @@ var jsCopter = {
         if (this.scores.halfStep == 1) {
             this.scores.current++;
             this.scores.elements.current.firstChild.data = this.scores.current;
+            this.progress.value = this.scores.current;
         }
     },
 
