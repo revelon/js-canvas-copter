@@ -32,12 +32,13 @@
     }
     #gameCaptcha h4 {
         font: bold 14px sans-serif;
-        margin-left: 5px;
         color: gold;
         pointer-events: none;
         line-height: 150%;
         text-shadow: 1px 1px #000, -1px -1px #000, -1px 1px #000, 1px -1px #000;
         position: absolute;
+        text-align: center;
+        width: 300px;
         top: 172px;
     }
     #gameCaptcha h4.over {
@@ -103,7 +104,7 @@ var jsCopter = {
         },
         colours : {
             bg : "#333",
-            fill : "#C7017F",
+            fill : "#880B60",
             light : "#eee"
         }
     },
@@ -784,21 +785,28 @@ var jsCopter = {
 
 }
 
+if (document.getElementById('gameCaptcha')) {
 
+    document.getElementById('gameCaptcha').innerHTML = '<p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 MB</strong></p><progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br><h4 id="intro" class="over">Hraj o stažení! / Play to download!<br>Klik = pohyb nahoru / Click = move up</h4><h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4><h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4><h4 id="toohard" style="display:none">Moc těžké? Nevadí, stahuj ;-)<br>Too hard? Never mind, download now ;-)</h4>';
 
+    var a = $('#fileSize'), 
+        b = $('div.info-media ul li:last-child'),
+        x = [0, 'B']; // dummy data
+    if (a.length) x = a[0].innerText.trim().split(' ');
+    else if (b.length) x = b[0].innerText.trim().split(' ');
+    var limit = 133;
+    if (x[1] === 'kB') limit = 120;
+    else if (x[1] === 'MB') limit = 250;
+    else if (x[1] === 'GB') limit = 340;
+    else if (x[1] === 'B') limit = 50;
+    document.getElementById('gameLimit').firstChild.data = x.join(' ');
+    // fix too short modal on PF
+    if (window.location.host.indexOf('pornfile') > -1 && $('#download')) {
+        $('#download').css('height', '560px');
+    }
+    jsCopter.init("jscopter", "gameCaptcha", "frm-downloadDialog-freeDownloadForm-freeDownload", limit);
 
-
-document.getElementById('gameCaptcha').innerHTML = '<p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 kB</strong></p><progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br><h4 id="intro" class="over">Hraj pro ověření! / Play to pass verification!<br>Click / Tap = &#x25B2; &nbsp; | &nbsp; Uvolnit / Release = &#x25BC;</h4><h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4><h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4><h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i tak ;-)<br>Too hard? Well, you can download it now ;-)</h4>';
-
-var x = (document.getElementById('fileSize').innerHTML).trim().split(' ');
-var limit = 133;
-if (x[1] === 'kB') limit = 120;
-else if (x[1] === 'MB') limit = 250;
-else if (x[1] === 'GB') limit = 340;
-else if (x[1] === 'B') limit = 50;
-document.getElementById('gameLimit').firstChild.data = x.join(' ');
-jsCopter.init("jscopter", "gameCaptcha", "frm-downloadDialog-freeDownloadForm-freeDownload", limit);
-
+}
 </script>
 
 

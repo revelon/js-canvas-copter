@@ -139,7 +139,7 @@ var jsCopter = {
 
         // hide and then later show download button for people
         this.downButton = document.getElementById(downButton);
-        this.downButton.classList.toggle("hidden");
+        this.downButton.classList.toggle("hiddener");
 
         this.deathText = document.getElementById('failure');
         this.winText = document.getElementById('victory');
@@ -420,7 +420,7 @@ var jsCopter = {
         // consider limit as fullfiled
         if (!this.wonAlready && this.scores.current == this.goalLimit) {
             this.winText.style.display = "block";
-            this.downButton.classList.toggle("hidden");
+            this.downButton.classList.toggle("hiddener");
             this.wonAlready = true;
         }
 
@@ -709,7 +709,7 @@ var jsCopter = {
         if (!this.wonAlready && this.scores.fails == 3) {
 
             document.getElementById('toohard').style.display = "block";
-            this.downButton.classList.toggle("hidden");
+            this.downButton.classList.toggle("hiddener");
             this.wonAlready = true;
 
         } else {
