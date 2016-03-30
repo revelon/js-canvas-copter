@@ -21,34 +21,39 @@
             height:1px;
             overflow:hidden;
         }
-        h4 {
+        #game-container h4 {
             font: bold 14px sans-serif;
             margin-left: 5px;
             color: gold;
             pointer-events: none;
             line-height: 150%;
             text-shadow: 1px 1px #000, -1px -1px #000, -1px 1px #000, 1px -1px #000;
-            position: relative;
+            position: absolute;
+            top: 172px;
         }
-        .over {
-            margin: -85px 0px 0px 5px;
+        #game-container h4.over {
+            top: 60px;
+        }
+        #game-container {
+            position: relative;
         }
         #game-container p {
             color: #000;
             font: 12px sans-serif;
+            margin: 0;
         }
         </style>
         <div id="game-container">
-        <p>Score: <strong id="score">0</strong> - &nbsp; TopScore: <strong id="topscore">0</strong> - &nbsp; Limit: <strong id="gameLimit">0</strong></p>
-        <progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br>
+            <p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 kB</strong></p>
+            <progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br>
+            <h4 id="intro" class="over">Hraj pro ověření! / Play to pass verification!<br>Click / Tap = &#x25B2; &nbsp; | &nbsp; Uvolnit / Release = &#x25BC;</h4>
+            <h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4>
+            <h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4>
+            <h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i tak ;-)<br>Too hard? Well, you can download it now ;-)</h4>
         </div>
-        <h4 id="intro" class="over">Hraj pro ověření! / Play to pass verification!<br>Click / Tap = &#x25B2; | Uvolnit / Release = &#x25BC;</h4>
-        <h4 id="failure" class="over" style="display:none">Bum! Zkus to znovu! / Crash! Try again!</h4>
-        <h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4>
-        <h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i tak ;-)<br>Too hard? Well, you can download it now ;-)</h4>
-        
+
 <div class="grid12" id="fileDownload">
-            <span class="commonBigButton jsOpenDownload" style="display:block; background:gold">Stáhnout</span>
+            <span class="commonBigButton jsOpenDownload" style="display:block;background:gold;cursor:pointer">Stáhnout</span>
 </div>
 
         <script src="script.js"></script>
@@ -57,7 +62,8 @@
             var limit = 100;
             if (x[0] < 5) limit = x[0] * 100;
             else if (x[0] < 10) limit = Math.ceil(x[0]/2) * 100;
-            else limit = 120;
+            else limit = 50;
+            document.getElementById('gameLimit').firstChild.data = x.join(' ');
             jsCopter.init("jscopter", "game-container", "fileDownload", limit);
         </script>
 

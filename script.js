@@ -143,8 +143,6 @@ var jsCopter = {
         this.progress = document.getElementById('gameProg');
         this.progress.max = goalLimit;
 
-        document.getElementById('gameLimit').firstChild.data = goalLimit;
-
         // set desired goal to win limit
         this.goalLimit = goalLimit;
 
@@ -244,7 +242,7 @@ var jsCopter = {
         this.deathText.style.display = "none";
         this.winText.style.display = "none";
         document.getElementById('toohard').style.display = "none";
-        document.getElementById('intro').style.display = "none";
+        //document.getElementById('intro').style.display = "none";
 
         this.progress.value = 0;
 
