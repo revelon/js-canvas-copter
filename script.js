@@ -266,7 +266,9 @@ var jsCopter = {
         this.winText.style.display = "none";
         document.getElementById('toohard').style.display = "none";
 
-        this.progress.value = 0;
+        if (!this.wonAlready) {
+            this.progress.value = 0;
+        }
 
         // create initial floor and ceiling
         this.createInitialWalls();
@@ -685,7 +687,9 @@ var jsCopter = {
         if (this.scores.halfStep == 1) {
             this.scores.current++;
             this.scores.elements.current.firstChild.data = this.scores.current;
-            this.progress.value = this.scores.current;
+            if (!this.wonAlready) {
+                this.progress.value = this.scores.current;
+            }
         }
     },
 
@@ -711,6 +715,7 @@ var jsCopter = {
             document.getElementById('toohard').style.display = "block";
             this.downButton.classList.toggle("hiddener");
             this.wonAlready = true;
+            this.progress.value = 1000000;
 
         } else {
 
