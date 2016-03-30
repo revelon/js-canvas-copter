@@ -1,3 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>JS Canvas Copter</title>
+    </head>
+    <body>
+
+<span id="fileSize">
+    120 GB
+    
+    
+</span>
+
+
+
+
+
+
+
+
+
+
+<style>
+    .hiddener {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+    #gameCaptcha h4 {
+        font: bold 14px sans-serif;
+        margin-left: 5px;
+        color: gold;
+        pointer-events: none;
+        line-height: 150%;
+        text-shadow: 1px 1px #000, -1px -1px #000, -1px 1px #000, 1px -1px #000;
+        position: absolute;
+        top: 172px;
+    }
+    #gameCaptcha h4.over {
+        top: 60px;
+    }
+    #gameCaptcha {
+        position: relative;
+        width: 300px;
+        margin: auto;
+    }
+    #gameCaptcha p {
+        color: #000;
+        font: 12px sans-serif;
+        margin: 0;
+    }
+</style>
+
+<script>
 /**
  * This file creates the JS Canvas Copter game
  *
@@ -45,7 +103,7 @@ var jsCopter = {
         },
         colours : {
             bg : "#333",
-            fill : "#880B60",
+            fill : "#C7017F",
             light : "#eee"
         }
     },
@@ -139,7 +197,7 @@ var jsCopter = {
 
         // hide and then later show download button for people
         this.downButton = document.getElementById(downButton);
-        this.downButton.classList.toggle("hidden");
+        this.downButton.classList.toggle("hiddener");
 
         this.deathText = document.getElementById('failure');
         this.winText = document.getElementById('victory');
@@ -420,7 +478,7 @@ var jsCopter = {
         // consider limit as fullfiled
         if (!this.wonAlready && this.scores.current == this.goalLimit) {
             this.winText.style.display = "block";
-            this.downButton.classList.toggle("hidden");
+            this.downButton.classList.toggle("hiddener");
             this.wonAlready = true;
         }
 
@@ -709,7 +767,7 @@ var jsCopter = {
         if (!this.wonAlready && this.scores.fails == 3) {
 
             document.getElementById('toohard').style.display = "block";
-            this.downButton.classList.toggle("hidden");
+            this.downButton.classList.toggle("hiddener");
             this.wonAlready = true;
 
         } else {
@@ -725,3 +783,40 @@ var jsCopter = {
     }
 
 }
+
+
+
+
+
+document.getElementById('gameCaptcha').innerHTML = '<p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 kB</strong></p><progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br><h4 id="intro" class="over">Hraj pro ověření! / Play to pass verification!<br>Click / Tap = &#x25B2; &nbsp; | &nbsp; Uvolnit / Release = &#x25BC;</h4><h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4><h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4><h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i tak ;-)<br>Too hard? Well, you can download it now ;-)</h4>';
+
+var x = (document.getElementById('fileSize').innerHTML).trim().split(' ');
+var limit = 133;
+if (x[1] === 'kB') limit = 120;
+else if (x[1] === 'MB') limit = 250;
+else if (x[1] === 'GB') limit = 340;
+else if (x[1] === 'B') limit = 50;
+document.getElementById('gameLimit').firstChild.data = x.join(' ');
+jsCopter.init("jscopter", "gameCaptcha", "frm-downloadDialog-freeDownloadForm-freeDownload", limit);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="grid12" id="fileDownload">
+            <span class="commonBigButton jsOpenDownload" style="display:block;background:gold;cursor:pointer">Stáhnout</span>
+</div>
+
+    </body>
+</html>

@@ -7,7 +7,7 @@
     <body>
 
 <span id="fileSize">
-    120 GB
+    120 B
     
     
 </span>
@@ -23,12 +23,13 @@
         }
         #game-container h4 {
             font: bold 14px sans-serif;
-            margin-left: 5px;
             color: gold;
             pointer-events: none;
             line-height: 150%;
             text-shadow: 1px 1px #000, -1px -1px #000, -1px 1px #000, 1px -1px #000;
             position: absolute;
+            text-align: center;
+            width: 300px;
             top: 172px;
         }
         #game-container h4.over {
@@ -36,6 +37,8 @@
         }
         #game-container {
             position: relative;
+            width: 300px;
+            margin: auto;
         }
         #game-container p {
             color: #000;
@@ -46,10 +49,10 @@
         <div id="game-container">
             <p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 kB</strong></p>
             <progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br>
-            <h4 id="intro" class="over">Hraj pro ověření! / Play to pass verification!<br>Click / Tap = &#x25B2; &nbsp; | &nbsp; Uvolnit / Release = &#x25BC;</h4>
+            <h4 id="intro" class="over">Hraj o stažení! / Play to download!<br>Klik = pohyb nahoru / Click = move up</h4>
             <h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4>
             <h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4>
-            <h4 id="toohard" style="display:none">Moc těžké? No tak tedy stahuj i tak ;-)<br>Too hard? Well, you can download it now ;-)</h4>
+            <h4 id="toohard" style="display:none">Moc těžké? Nevadí, stahuj ;-)<br>Too hard? Never mind, download now ;-)</h4>
         </div>
 
 <div class="grid12" id="fileDownload">
