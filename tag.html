@@ -67,16 +67,6 @@
  * @author petegoodman.com
  */
 
-/**
- * This file creates the JS Canvas Copter game
- *
- * Based on https://github.com/thegingerbloke/js-canvas-copter which is
- * based on the original flash copter game:
- * http://www.seethru.co.uk/zine/south_coast/helicopter_game.htm
- *
- * @author petegoodman.com
- */
-
 var jsCopter = {
 
     // object : default options, can be overwritten by init call
@@ -806,8 +796,8 @@ if (document.getElementById('gameCaptcha')) {
 
     var a = $('#fileSize'), 
         b = $('div.info-media ul li:last-child'),
-        x = [0, 'B']; // dummy data
-    if (a.length) x = a[0].innerText.trim().split(' ');
+        x = ['?', 'MB']; // dummy data
+    if (a.length) x = a[0].innerText.trim().split('|')[0].trim().split(' ');
     else if (b.length) x = b[0].innerText.trim().split(' ');
     var limit = 133;
     if (x[1] === 'kB') limit = 120;
