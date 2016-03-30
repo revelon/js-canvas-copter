@@ -21,7 +21,7 @@ var jsCopter = {
             height : 15,
             topSpeed : 5,                   // max speed
             acceleration : 0.15,            // how much to increase the speed by each time the game refreshes and the button is held down
-            img : null //'ship.svg'                // optional copter image path, relative to the html page
+            img : null // 'sh.png'                  // optional copter image path, relative to the html page
         },
         physics : {
             terminalVelocity : 4,           // max speed
@@ -45,7 +45,7 @@ var jsCopter = {
         colours : {
             bg : "#333",
             fill : "#C7017F",
-            light : "#ffffff"
+            light : "#eee"
         }
     },
 
@@ -118,6 +118,9 @@ var jsCopter = {
     // flag indicating that download link shoudl already be visible
     wonAlready: false,
 
+    // loaded img resource
+    imgCopter: null,
+
     /**
      * start the JS Copter process
      *
@@ -161,14 +164,33 @@ var jsCopter = {
         // set the intial copter game data
         this.resetGameData();
 
-        // create copter element
-        this.createCopter();
-
         // create initial floor & ceiling
         this.createInitialWalls();
 
         // set a mouse listener to start the game
         this.initMouseListener();
+
+        if (this.options.copter.img) {
+
+            // save 'this' context
+            var that = this;
+
+            // create copter element
+            var copter = new Image();
+            copter.src = that.options.copter.img;
+
+            // when image has loaded
+            copter.onload = function() {
+                that.options.copter.width = copter.width;
+                that.options.copter.height = copter.height;
+                console.log(copter, that.options.copter);
+                
+                // create copter element
+                that.createCopter();
+            }
+
+            this.imgCopter = copter;
+        }
     },
 
 
@@ -242,7 +264,6 @@ var jsCopter = {
         this.deathText.style.display = "none";
         this.winText.style.display = "none";
         document.getElementById('toohard').style.display = "none";
-        //document.getElementById('intro').style.display = "none";
 
         this.progress.value = 0;
 
@@ -286,19 +307,7 @@ var jsCopter = {
         // condition : if an image is specified, use it
         if (this.options.copter.img) {
 
-            // save 'this' context
-            var that = this;
-
-            // create copter element
-            var copter = new Image();
-            copter.src = that.options.copter.img;
-
-            // when image has loaded
-            copter.onload = function() {
-                draw.drawImage(copter, that.gameData.copter.x, that.gameData.copter.y, copter.width, copter.height);
-                that.options.copter.width = copter.width;
-                that.options.copter.height = copter.height;
-            }
+           draw.drawImage(this.imgCopter, this.gameData.copter.x, this.gameData.copter.y, this.imgCopter.width, this.imgCopter.height);
 
         // no image set, use a block
         } else {
