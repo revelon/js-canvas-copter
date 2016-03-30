@@ -7,7 +7,7 @@
     <body>
 
 <span id="fileSize">
-    120 kB
+    120 MB
     
     
 </span>
@@ -59,15 +59,16 @@
         <script src="script.js"></script>
         <script>
             var x = (document.getElementById('fileSize').innerHTML).trim().split(' ');
-            var limit = 100;
-            if (x[0] < 5) limit = x[0] * 100;
+            var limit = 133;
+            /*if (x[0] < 5) limit = x[0] * 100;
             else if (x[0] < 10) limit = Math.ceil(x[0]/2) * 100;
-            else limit = 50;
+            else limit = 50;*/
+            if (x[1] === 'kB') limit = 120;
+            else if (x[1] === 'MB') limit = 240;
+            else if (x[1] === 'GB') limit = 333;
             document.getElementById('gameLimit').firstChild.data = x.join(' ');
             jsCopter.init("jscopter", "game-container", "fileDownload", limit);
         </script>
 
-
-<script type="text/javascript" src="http://ulozto.cz.intellitxt.com/intellitxt/front.asp?ipid=88828"></script>
     </body>
 </html>

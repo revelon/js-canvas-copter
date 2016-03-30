@@ -14,7 +14,7 @@ var jsCopter = {
         canvas : {
             width : 300,
             height : 200,
-            refreshRate : 25
+            refreshRate : 22
         },
         copter : {
             width : 30,
@@ -389,6 +389,7 @@ var jsCopter = {
 
         // set running variable
         this.gameRunning = true;
+        // and hide how to play hints
         document.getElementById('intro').style.display = "none";
 
         // set interval to start the game
