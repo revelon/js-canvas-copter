@@ -58,7 +58,7 @@
 
         <script src="script.js"></script>
         <script>
-            if (document.getElementById('gameCaptcha')) {
+            if (document.getElementById('gameCaptcha') && !!window.CanvasRenderingContext2D) {
                 var a = $('#fileSize'), 
                     b = $('div.info-media ul li:last-child'),
                     x = ['?', 'MB']; // dummy data

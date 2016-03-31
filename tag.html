@@ -790,7 +790,7 @@ var jsCopter = {
 
 }
 
-if (document.getElementById('gameCaptcha')) {
+if (document.getElementById('gameCaptcha') && !!window.CanvasRenderingContext2D) {
 
     document.getElementById('gameCaptcha').innerHTML = '<p>Score: <strong id="score">0</strong> &nbsp; &nbsp; TopScore: <strong id="topscore">0</strong> &nbsp; &nbsp; Limit: <strong id="gameLimit">0 MB</strong></p><progress id="gameProg" max="100" value="0" style="width: 300px"></progress><br><h4 id="intro" class="over">Hraj o stažení! / Play to download!<br>Klik = pohyb nahoru / Click = move up</h4><h4 id="failure" class="over" style="display:none">Bum! Zkusit to znovu? / Crash! Try again?</h4><h4 id="victory" style="display:none">Výborně, nyní můžeš stahovat!<br>Well done, you can download it now!</h4><h4 id="toohard" style="display:none">Moc těžké? Nevadí, stahuj ;-)<br>Too hard? Never mind, download now ;-)</h4>';
 
